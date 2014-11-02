@@ -1,6 +1,4 @@
 <h1>BuoyantJS</h1>
-=======
-
 <h2>A DOM and data-binding framework.</h2>
 
 
