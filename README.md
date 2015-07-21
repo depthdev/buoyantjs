@@ -3,7 +3,7 @@
 
 <p>It's surface/high-level language approach is geared towards simplicity, as well as what's actually under the hood.</p>
 
-<p>The <a href="http://clearwavedesigns.com/buoyantjs/" target="_blank">docs</a></p>
+<p>The <a href="http://clearwavedesigns.com/buoyantjs/" target="_blank">docs</a>.</p>
 
 <ul>
   <li>Two-way data-binding</li>
