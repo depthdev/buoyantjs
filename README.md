@@ -13,7 +13,7 @@
   <li>Offline support</li>
 </ul>
 
-<small>COPYRIGHT (C) 2013-2015 by CLEARWAVE DESIGNS, LLC.  All rights reserved.</small>
+<small>COPYRIGHT (C) 2013 - 2015 by CLEARWAVE DESIGNS, LLC.  All rights reserved.</small>
 
 <ul>
   <li>Name (official): BuoyantJS</li>
