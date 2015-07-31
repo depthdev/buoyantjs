@@ -1,5 +1,6 @@
 <h1>BuoyantJS</h1>
 <h2>BouyantJS is an MVC two-way data-binding framework and DOM manipulation library.</h2>
+<img src="http://cdn.clearwavedesigns.com/buoyantjs.jpg" alt="BuoyantJS"/>
 
 <p>It's surface/high-level language approach is geared towards simplicity, as well as what's actually under the hood.</p>
 
