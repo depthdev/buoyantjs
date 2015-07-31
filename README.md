@@ -4,6 +4,7 @@
 
 <p>It's surface/high-level language approach is geared towards simplicity, as well as what's actually under the hood.</p>
 
+<p><a href="http://clearwavedesigns.com/code/" target="_blank">Demo it!</a> (See the example button at the bottom to pre-populate it with code.)</p>
 <p>The <a href="http://clearwavedesigns.com/buoyantjs/" target="_blank">docs</a>.</p>
 
 <ul>
