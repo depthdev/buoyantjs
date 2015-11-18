@@ -1,6 +1,6 @@
 /*
  BuoyantJS v1.0.3
- (c) 2013-2015 Clearwave Designs, LLC. http://clearwavedesigns.com
+ (c) 2013-2015 Depth Development. http://depthdev.com
  License: Apache 2.0
 */
 
