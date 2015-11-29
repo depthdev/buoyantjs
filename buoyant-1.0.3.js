@@ -1,8 +1,13 @@
 /*
- BuoyantJS v1.0.3
- (c) 2013-2015 Depth Development. http://depthdev.com
+ BuoyantJS v1.4.0
+ (c) 2013-2015 by Depth Development. http://depthdev.com
  License: Apache 2.0
 */
+
+
+'use strict';
+
+
 
 //////////////////////////////////////
 //
@@ -32,7 +37,14 @@ var $Buoyant = function(elements, selector) { this.elems = elements; this.select
       var classes = classNames.split(/[,\s]+/g);
       for (var i=0,l=this.elems.length;i<l;i++) {
         for (var ii=0,ll=classes.length;ii<ll;ii++) {
-          this.elems[i].className += ' ' + classes[ii];
+
+          if (!new RegExp('^' + classes[ii]).test(this.elems[i].className) && !new RegExp('\\s' + classes[ii] + '$').test(this.elems[i].className) && !new RegExp('\\s' + classes[ii] + '\\s').test(this.elems[i].className)) {
+            if (this.elems[i].className === '') {
+              this.elems[i].className += classes[ii];
+            } else {
+              this.elems[i].className += ' ' + classes[ii];
+            }
+          }
         }
       }
     }
@@ -357,8 +369,15 @@ var callbackFunc = String(func).replace(/\s/g,'');
       var classes = classNames.split(/[,\s]+/g);
       for (var i=0,l=this.elems.length;i<l;i++) {
         for (var ii=0,ll=classes.length;ii<ll;ii++) {
-          var regex = new RegExp('\\s*' + classes[ii],'g');
-          this.elems[i].className = this.elems[i].className.replace(regex,'');
+          if (new RegExp('^' + classes[ii] + '$').test(this.elems[i].className)) {
+            this.elems[i].className = '';
+          } else if (new RegExp('^' + classes[ii] + '\\s').test(this.elems[i].className)) {
+            var re = new RegExp(classes[ii] + '\\s');
+            this.elems[i].className = this.elems[i].className.replace(re,'');
+          } else if (new RegExp('\\s' + classes[ii] + '$').test(this.elems[i].className) || new RegExp('\\s' + classes[ii] + '\\s').test(this.elems[i].className)) {
+            var re = new RegExp('\\s' + classes[ii]);
+            this.elems[i].className = this.elems[i].className.replace(re,'');
+          }
         }
       }
     }
@@ -728,7 +747,7 @@ var $$Buoyant = function(options) {
     var style = document.createElement('style');
     style.textContent = '[' + this.prefix + '-cloak], [' + this.prefix + '-ready] { display: none !important; }';
     document.querySelector('head').appendChild(style);
-  })();
+  }.bind(this));
 
   // DEVELOPER'S VIEW
   this.viewSelector = document.querySelector('[' + this.prefix + '-view]');
@@ -913,7 +932,7 @@ $$Buoyant.prototype.route = {};
 
 
 // ROUTER (Load controller's view and model)
-$$Buoyant.prototype.router = function(controller, static) {
+$$Buoyant.prototype.router = function(controller, isStatic) {
 
   var that = this;
 
@@ -926,7 +945,7 @@ if (this.controllerName) {
 }
 
 // Set current controller's name
-if (!static) {
+if (!isStatic) {
   this.controllerName = controller;
 }
 
@@ -937,7 +956,7 @@ if (this.resources.hasOwnProperty(controller)) {
   // Add it back
   this.$$[controller] = {};
   // Inject new controller's view
-  if (!static) {
+  if (!isStatic) {
     if (this.resources[controller].hasOwnProperty('styles')) {
       this.viewSelector.innerHTML = '<style>' + this.resources[controller].styles + '</style>';
       var docFrag = document.createDocumentFragment();
@@ -1020,7 +1039,8 @@ $$Buoyant.prototype.controller = function(controller, script) {
 $$Buoyant.prototype.controllerUnbind = function(controller) {
 
   /*
-  * Unless there are pointers to the elements,
+  * I don't think I need this because view gets replaced,
+  * so unless there are pointers to the elements,
   * the listeners will get removed from the JavaScript's garbage collection
   */
 
@@ -1288,6 +1308,7 @@ if (ajax.hasOwnProperty('data')) {
 // SETUP VIEWS FOR ROUTES
 $$Buoyant.prototype.$$routes = function(routes) {
 
+
   var that = this;
 
 
@@ -1384,13 +1405,14 @@ $$Buoyant.prototype.$$routes = function(routes) {
     return count;
   })();
 
+
   // GET ALL HTML FILES
   // Add each view to the controller on the resources object
   var actualLoadedViews = 0;
   var loadViews = function(index) {
     that.http({
       action: routes[index].view,
-      method: 'POST',
+      method: 'GET',
       dataType: 'HTML',
       success: function(data) {
         // Set controller view to resources object
@@ -1417,7 +1439,7 @@ $$Buoyant.prototype.$$routes = function(routes) {
   var loadStyles = function(index, elemIndex) {
     that.http({
       action: elemIndex || elemIndex === 0 ? routes[index].styles[elemIndex] : routes[index].styles,
-      method: 'POST',
+      method: 'GET',
       dataType: 'text',
       success: function(data) {
         // Set controller style to resources object
