@@ -1,7 +1,7 @@
 /*
  BuoyantJS v1.4.0
  (c) 2013-2015 by Depth Development. http://depthdev.com
- License: Apache 2.0
+ License: MIT
 */
 
 
